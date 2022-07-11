@@ -48,8 +48,18 @@ studentsRoutes.put('/:id', async (request, response) => {
   }
 });
 
-studentsRoutes.delete('/', (request, response) => {
-  response.send();
+studentsRoutes.delete('/:id', async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const deleteStudentService = require('../services/students/deleteStudentService');
+
+    await deleteStudentService(id);
+
+    response.status(204).send();
+  } catch (error) {
+    response.json({ status: 'Erro', message: error.message });
+  }
 });
 
 module.exports = studentsRoutes;
