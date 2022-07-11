@@ -8,6 +8,9 @@ const EXPRESS_PORT = process.env.PORT;
 const express = require('express');
 const app = express();
 const router = require('./routes/router');
+const authenticationMiddleware = require('./middlewares/authentication');
+
+app.use(authenticationMiddleware);
 
 app.use(express.json());
 app.use(router);
