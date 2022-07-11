@@ -30,12 +30,22 @@ studentsRoutes.post('/', async (request, response) => {
   }
 });
 
-studentsRoutes.patch('/', (request, response) => {
-  response.send();
-});
+studentsRoutes.put('/:id', async (request, response) => {
+  try {
+    const { name, age, course, school } = request.body;
+    const { id } = request.params;
 
-studentsRoutes.put('/', (request, response) => {
-  response.send();
+    if (!id || !name)
+      return response.json({ status: 'Erro', message: 'Necessário ID para efetuar atualização!'});
+
+    const searchOneStudentService = require('../services/students/searchOneStudentService');
+
+    const student = await searchOneStudentService({ id, name, age, course, school });
+
+    response.json(student);
+  } catch (error) {
+    response.json({ status: 'Erro', message: error.message });
+  }
 });
 
 studentsRoutes.delete('/', (request, response) => {
