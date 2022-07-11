@@ -1,15 +1,23 @@
 const express = require('express');
 const studentsRoutes = express.Router();
 
-studentsRoutes.get('/', (request, response) => {
-  response.json({ students: [{ name: 'Maicon', age: 32 }, { name: 'Jonas', age: 21 }]});
+studentsRoutes.get('/', async (request, response) => {
+  try {
+    const searchStudentsService = require('../services/students/searchStudentsService');
+
+    const students = await searchStudentsService();
+
+    response.json({ status: 'Sucesso', students });
+  } catch (error) {
+    response.json({ status: 'Erro', message: error.message });
+  }
 });
 
 studentsRoutes.post('/', async (request, response) => {
   try {
     const { name, age, course, school } = request.body;
 
-    if(!name || !age)
+    if (!name || !age)
       return response.json({ status: 'Erro', message: 'Necessário nome e idade para cadastro!'});
 
     const createStudentService = require('../services/students/createStudentService');
