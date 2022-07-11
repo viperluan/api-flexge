@@ -4,7 +4,7 @@ async function createStudentService({ name, age, course, school }) {
   const studentAlreadyExists = await StudentModel.findOne({ name });
 
   if(studentAlreadyExists)
-    throw new Error('Estudante existente na base de dados.');
+    throw new Error('Aluno existente na base de dados.');
 
   const student = new StudentModel({ name, age, course, school });
 
