@@ -3,11 +3,21 @@ const studentsRoutes = express.Router();
 
 studentsRoutes.get('/', async (request, response) => {
   try {
+    const { name } = request.query;
+
+    if (name) {
+      const searchStudentsByNameService = require('../services/students/searchStudentsByNameService');
+
+      const students = await searchStudentsByNameService(name);
+
+      return response.json({ status: 'Sucesso', students });
+    }
+
     const searchStudentsService = require('../services/students/searchStudentsService');
 
     const students = await searchStudentsService();
 
-    response.json({ status: 'Sucesso', students });
+    return response.json({ status: 'Sucesso', students });
   } catch (error) {
     response.json({ status: 'Erro', message: error.message });
   }
