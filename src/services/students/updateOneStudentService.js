@@ -1,4 +1,4 @@
-async function searchOneStudentService({ id, name, age, course, school }) {
+async function updateOneStudentService({ id, name, age, course, school }) {
   const StudentModel = require('../../models/Student');
 
   const student = await StudentModel.findOneAndUpdate(
@@ -13,4 +13,4 @@ async function searchOneStudentService({ id, name, age, course, school }) {
   return student;
 }
 
-module.exports = searchOneStudentService;
+module.exports = updateOneStudentService;

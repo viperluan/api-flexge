@@ -38,9 +38,9 @@ studentsRoutes.put('/:id', async (request, response) => {
     if (!id || !name)
       return response.json({ status: 'Erro', message: 'Necessário ID para efetuar atualização!'});
 
-    const searchOneStudentService = require('../services/students/searchOneStudentService');
+    const updateOneStudentService = require('../services/students/updateOneStudentService');
 
-    const student = await searchOneStudentService({ id, name, age, course, school });
+    const student = await updateOneStudentService({ id, name, age, course, school });
 
     response.json(student);
   } catch (error) {
