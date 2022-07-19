@@ -8,7 +8,9 @@ userRoutes.post('/login', (request, response) => {
   if(email !== 'viperluan@gmail.com' || password !== '12345')
     return response.json({ status: 'Erro', message: 'Usuário ou senha inválidos.'});
 
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: 10 });
+  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+    expiresIn: 60 * 60 * 4, // 4h
+  });
 
   response.json({ status: 'Sucesso', message: 'Login realizado com sucesso.', token })
 });
