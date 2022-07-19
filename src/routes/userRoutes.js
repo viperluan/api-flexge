@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = express.Router();
+const jwt = require('jsonwebtoken');
 
 userRoutes.post('/login', (request, response) => {
   const { email, password } = request.body;
@@ -7,9 +8,9 @@ userRoutes.post('/login', (request, response) => {
   if(email !== 'viperluan@gmail.com' || password !== '12345')
     return response.json({ status: 'Erro', message: 'Usuário ou senha inválidos.'});
 
-  const TOKEN = process.env.TOKEN;
+  const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: 10 });
 
-  response.json({ status: 'Sucesso', message: 'Login realizado com sucesso.', token: TOKEN })
+  response.json({ status: 'Sucesso', message: 'Login realizado com sucesso.', token })
 });
 
 module.exports = userRoutes;
