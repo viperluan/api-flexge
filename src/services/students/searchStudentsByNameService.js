@@ -1,7 +1,9 @@
 async function searchStudentsByNameService(name) {
   const StudentModel = require('../../models/Student');
 
-  const students = await StudentModel.find({ name });
+  const regexName = new RegExp(name, 'i');
+
+  const students = await StudentModel.find({ name: {$regex: regexName} });
 
   return students;
 }
